@@ -18,7 +18,7 @@ public class LandingPageStepDefinition {
     public void user_is_on_green_cart_landing_page() {
     }
 
-    @When("user searched with shortname {string} and Extracted actual name of product")
+    @When("^user searched with shortname (.+) and Extracted actual name of product$")
     public void user_searched_with_shortname_and_extracted_actual_name_of_product(String shortName) {
         LandingPage landingPage = testContextSetup.pageObjectManager.getLandingPage();
         landingPage.SearchItem(shortName);

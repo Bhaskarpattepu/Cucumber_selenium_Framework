@@ -24,6 +24,7 @@ public class OffersPage {
     {
         System.out.println("getProductname if offerpage");
         String productname =driver.findElement(ProductName1).getText();
+        System.out.println(productname);
         return productname;
     }
 }

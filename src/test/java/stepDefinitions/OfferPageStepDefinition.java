@@ -25,7 +25,7 @@ public class OfferPageStepDefinition {
         landingPage.SelectTopDeals();
         testContextSetup.genericUtils.SwitchWindowtoChild();
     }
-    @Then("user searched for {string} shortname in offers page to check if product exist with same name")
+    @Then("^user searched for (.+) shortname in offers page to check if product exist with same name$")
     public void user_searched_for_shortname_in_offers_page_to_check_if_product_exist(String shortName) {
         SwitchToOffersPage();
         OffersPage offersPage = testContextSetup.pageObjectManager.getOfferPage();
