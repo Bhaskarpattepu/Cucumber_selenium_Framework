@@ -1,5 +1,6 @@
 Feature: Search and place the order for products
 
+  @OffersPage
   Scenario Outline: Search Experience for Product Search in both home and offers page
     Given User is on GreenCart Landing Page
     When user searched with shortname <Name> and Extracted actual name of product
@@ -8,5 +9,6 @@ Feature: Search and place the order for products
 
     Examples:
     | Name |
-    | Tom |
+    | Tomi |
     | Pot |
+

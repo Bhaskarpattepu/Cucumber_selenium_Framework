@@ -24,7 +24,10 @@ public class OffersPage {
     {
         System.out.println("getProductname if offerpage");
         String productname =driver.findElement(ProductName1).getText();
-        System.out.println(productname);
+        if(productname.equalsIgnoreCase("No data"))
+        {
+            System.out.println("Product that found in landing page doesnot found in Offers page");
+        }
         return productname;
     }
 }

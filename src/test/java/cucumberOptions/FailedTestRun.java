@@ -6,16 +6,15 @@ import org.testng.annotations.DataProvider;
 
 //html ,xml , json ,junit, Extent
 @CucumberOptions(
-        features = "src/test/java/features",
+        features = "@target/failed_scenarios.txt",
         glue="stepDefinitions",
         monochrome = true,
-        tags = "@PlaceOrder or   @OffersPage ",
         plugin ={
                 "html:target/cucumber.html","json:target/cucumber.json",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
-                ,"rerun:target/failed_scenarios.txt"}
+                }
                 )
-public class TestNGTestRunner extends AbstractTestNGCucumberTests {
+public class FailedTestRun extends AbstractTestNGCucumberTests {
 
     @DataProvider/*(parallel = true)*/
     @Override
