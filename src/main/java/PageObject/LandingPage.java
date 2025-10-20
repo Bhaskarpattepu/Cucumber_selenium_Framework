@@ -1,9 +1,9 @@
 package PageObject;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -26,69 +26,39 @@ public class LandingPage {
 public void SearchItem(String name)
 {
     System.out.println("Search item of Landingpage");
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+    //WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     WebElement searchbox = driver.findElement(search);
     searchbox.clear();
     searchbox.sendKeys(name);
+    Wait<WebDriver> wait = new FluentWait<>(driver)
+            .withTimeout(Duration.ofSeconds(10))
+            .pollingEvery(Duration.ofSeconds(1))
+            .ignoring(StaleElementReferenceException.class)
+            .ignoring(NoSuchElementException.class);
 
-// Retry-safe wait with maximum 2 attempts
-    List<WebElement> products = new ArrayList<>();
-    int maxRetries = 2;
-    int attempts = 0;
-
-//    try {
-        while (attempts < maxRetries)
-        {
-            try {
-                List<WebElement> elements = wait.until(driver1 -> {
-                    List<WebElement> listElements = driver1.findElements(ProductName);
-                    if (listElements.size() > 0) {
-                        // Check visibility to detect stale elements
-                        for (WebElement e : listElements) {
-                            e.isDisplayed();
-                        }
-                        return listElements;
-                    }
-                    return null;
-                });
-                products = elements;
-                break; // Success, exit retry loop
-            } catch (Exception e)
-            {
-                attempts++;
-                System.out.println("Stale element detected, retrying... attempt " + attempts);
-                if (attempts >= maxRetries)
-                {
-                    System.out.println("Max retries reached for stale elements");
-                    break;
-                }
+    List<WebElement> products = wait.until(driver -> {
+        List<WebElement> elems = driver.findElements(ProductName);
+        List<WebElement> visibleElems = new ArrayList<>();
+        for (WebElement e : elems) {
+            if (e.isDisplayed()) {
+                visibleElems.add(e);
             }
         }
+        return visibleElems.size() > 0 ? visibleElems : null;  // wait if empty
+    });
 
-// If timeout or no products found
-    if (products == null || products.isEmpty())
-    {
-        System.out.println("No products found for: " + name);
-    }
-    // Else collect product names
-    else
-    {
-        list = new ArrayList<>();
-        for (WebElement el : products) {
-            list.add(el.getText());
+    gname = null; // reset global product name
+    for (WebElement product : products) {
+        if (product.getText().toLowerCase().contains(name.toLowerCase())) {
+            gname = product.getText();
+            System.out.println("Found product: " + gname);
+            product.click();  // click if needed
+            break;
         }
     }
-// Try to find the matching product
-    gname = null;
-    if(list != null)
-    {
-        for (String li : list) {
-            System.out.println("Found product: " + li);
-            if (li.trim().toLowerCase().contains(name.toLowerCase())) {
-                gname = li;
-                break;
-            }
-        }
+
+    if (gname == null) {
+        System.out.println("No matching product found for: " + name);
     }
 }
 public String getProductName()

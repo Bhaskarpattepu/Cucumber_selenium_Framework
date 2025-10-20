@@ -9,6 +9,6 @@ Feature: Search and place the order for products
 
     Examples:
     | Name |
-    | Tomi |
+    | Tom |
     | Pot |
 

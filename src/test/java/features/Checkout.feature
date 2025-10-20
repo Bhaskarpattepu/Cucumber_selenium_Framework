@@ -10,4 +10,4 @@ Feature: Place the order for products
     Examples:
       | Name |
       | Pot |
-      | Tomi |
+      | Tom |
