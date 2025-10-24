@@ -3,6 +3,7 @@ package stepDefinitions;
 import PageObject.CheckoutPage;
 import PageObject.LandingPage;
 import PageObject.OffersPage;
+import PageObject.ProceedPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.testng.Assert;
@@ -12,10 +13,12 @@ public class CheckOutPageStepDefinition {
     public CheckoutPage checkoutPage;
 //Single Responsibility Principle Loosly coupled
     TestContextSetup testContextSetup;
+    public ProceedPage proceedPage;
     public CheckOutPageStepDefinition(TestContextSetup testContextSetup)
     {
         this.testContextSetup=  testContextSetup;
         this.checkoutPage = testContextSetup.pageObjectManager.getCheckoutPage();
+        this.proceedPage=testContextSetup.pageObjectManager.getProceedPage();
     }
 
     @Then("^User proceeds to checkout and validate the (.+) items in checkout page$")
@@ -30,5 +33,11 @@ public class CheckOutPageStepDefinition {
     public void verify_user_has_ability_to_enter_promo()
     {
         checkoutPage.PlaceOrderclick();
+        proceedPage.ClickSelect();
+        proceedPage.Selectcheckbox();
+        proceedPage.Selectproceed();
+        String text = proceedPage.Successfultestcapture();
+        boolean orderplaced = text.contains("your order has been placed successfully");
+        Assert.assertTrue(orderplaced);
     }
 }

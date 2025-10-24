@@ -8,8 +8,9 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class CheckoutPage {
     public WebDriver driver;
@@ -48,7 +49,10 @@ public class CheckoutPage {
     }
     public void PlaceOrderclick()
     {
+        System.out.println("Control is in Placeorderclick");
         driver.findElement(placeOrder).click();
     }
+
+
 
 }
